@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retro Candy Crush Game</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game board dimensions
+        const boardWidth = 8;
+        const boardHeight = 12;
+        const tileSize = 40;
+
+        // Game board array
+        let board = [];
+
+        // Candy colors
+        const colors = ['red', 'green', 'blue', 'yellow', 'purple'];
+
+        // Initialize the game board
+        function initBoard() {
+            for (let y = 0; y < boardHeight; y++) {
+                board[y] = [];
+                for (let x = 0; x < boardWidth; x++) {
+                    board[y][x] = getRandomColor();
+                }
+            }
+        }
+
+        // Get a random candy color
+        function getRandomColor() {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Draw the game board
+        function drawBoard() {
+            for (let y = 0; y < boardHeight; y++) {
+                for (let x = 0; x < boardWidth; x++) {
+                    ctx.fillStyle = board[y][x];
+                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                }
+            }
+        }
+
+        // Game loop
+        function gameLoop() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the game board
+            drawBoard();
+
+            // Request the next animation frame
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Initialize the game
+        initBoard();
+        gameLoop();
+    </script>
+</body>
+</html>
